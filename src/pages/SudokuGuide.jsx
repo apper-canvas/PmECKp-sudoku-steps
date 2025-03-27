@@ -14,18 +14,17 @@ import {
 } from 'lucide-react'
 import ImageWithCaption from '../components/ImageWithCaption'
 
-// Import sample images for the guide
-// In a real implementation, these paths would point to actual image files
-const SUDOKU_HISTORY = 'https://images.unsplash.com/photo-1611024847449-0b2956690141?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-const SUDOKU_RULES = 'https://images.unsplash.com/photo-1580541832626-2a7131ee809f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-const SUDOKU_4X4 = 'https://images.unsplash.com/photo-1637953852425-3d3ae9184865?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
-const SUDOKU_6X6 = 'https://images.unsplash.com/photo-1637953852425-3d3ae9184865?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
-const SUDOKU_9X9 = 'https://images.unsplash.com/photo-1637953852425-3d3ae9184865?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
-const TECHNIQUE_SCANNING = 'https://images.unsplash.com/photo-1611024847449-0b2956690141?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'
-const TECHNIQUE_SINGLE_POSITION = 'https://images.unsplash.com/photo-1611024847449-0b2956690141?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'
-const TECHNIQUE_PENCIL_MARKS = 'https://images.unsplash.com/photo-1611024847449-0b2956690141?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'
-const TECHNIQUE_XWING = 'https://images.unsplash.com/photo-1611024847449-0b2956690141?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'
-const TECHNIQUE_YWING = 'https://images.unsplash.com/photo-1611024847449-0b2956690141?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'
+// Updated image URLs for reliable loading
+const SUDOKU_HISTORY = 'https://images.pexels.com/photos/4792724/pexels-photo-4792724.jpeg?auto=compress&cs=tinysrgb&w=1000'
+const SUDOKU_RULES = 'https://images.pexels.com/photos/6670074/pexels-photo-6670074.jpeg?auto=compress&cs=tinysrgb&w=1000'
+const SUDOKU_4X4 = 'https://i.ibb.co/n8CGbXD/sudoku-4x4.png'
+const SUDOKU_6X6 = 'https://i.ibb.co/KqQGSLB/sudoku-6x6.png'
+const SUDOKU_9X9 = 'https://i.ibb.co/KhfPwRB/sudoku-9x9.png'
+const TECHNIQUE_SCANNING = 'https://images.pexels.com/photos/5428833/pexels-photo-5428833.jpeg?auto=compress&cs=tinysrgb&w=800'
+const TECHNIQUE_SINGLE_POSITION = 'https://images.pexels.com/photos/8867430/pexels-photo-8867430.jpeg?auto=compress&cs=tinysrgb&w=800'
+const TECHNIQUE_PENCIL_MARKS = 'https://images.pexels.com/photos/8326308/pexels-photo-8326308.jpeg?auto=compress&cs=tinysrgb&w=800'
+const TECHNIQUE_XWING = 'https://images.pexels.com/photos/6382274/pexels-photo-6382274.jpeg?auto=compress&cs=tinysrgb&w=800'
+const TECHNIQUE_YWING = 'https://images.pexels.com/photos/5428026/pexels-photo-5428026.jpeg?auto=compress&cs=tinysrgb&w=800'
 
 const SudokuGuide = () => {
   // State to track which sections are expanded
