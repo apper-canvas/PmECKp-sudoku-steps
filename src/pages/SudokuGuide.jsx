@@ -12,6 +12,20 @@ import {
   Grid,
   CheckSquare
 } from 'lucide-react'
+import ImageWithCaption from '../components/ImageWithCaption'
+
+// Import sample images for the guide
+// In a real implementation, these paths would point to actual image files
+const SUDOKU_HISTORY = 'https://images.unsplash.com/photo-1611024847449-0b2956690141?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
+const SUDOKU_RULES = 'https://images.unsplash.com/photo-1580541832626-2a7131ee809f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
+const SUDOKU_4X4 = 'https://images.unsplash.com/photo-1637953852425-3d3ae9184865?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
+const SUDOKU_6X6 = 'https://images.unsplash.com/photo-1637953852425-3d3ae9184865?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
+const SUDOKU_9X9 = 'https://images.unsplash.com/photo-1637953852425-3d3ae9184865?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
+const TECHNIQUE_SCANNING = 'https://images.unsplash.com/photo-1611024847449-0b2956690141?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'
+const TECHNIQUE_SINGLE_POSITION = 'https://images.unsplash.com/photo-1611024847449-0b2956690141?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'
+const TECHNIQUE_PENCIL_MARKS = 'https://images.unsplash.com/photo-1611024847449-0b2956690141?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'
+const TECHNIQUE_XWING = 'https://images.unsplash.com/photo-1611024847449-0b2956690141?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'
+const TECHNIQUE_YWING = 'https://images.unsplash.com/photo-1611024847449-0b2956690141?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'
 
 const SudokuGuide = () => {
   // State to track which sections are expanded
@@ -59,8 +73,8 @@ const SudokuGuide = () => {
     </div>
   )
 
-  // Technique component for explaining solving techniques
-  const Technique = ({ title, difficulty, description, example }) => (
+  // Enhanced Technique component with optional image
+  const Technique = ({ title, difficulty, description, example, imageSrc, imageAlt, imageCaption }) => (
     <div className="border border-surface-200 dark:border-surface-700 rounded-lg p-4 mb-4">
       <div className="flex justify-between items-start mb-3">
         <h4 className="font-semibold text-lg">{title}</h4>
@@ -74,12 +88,27 @@ const SudokuGuide = () => {
           {difficulty}
         </span>
       </div>
-      <p className="text-surface-700 dark:text-surface-300 mb-4">{description}</p>
-      {example && (
-        <div className="bg-surface-100 dark:bg-surface-800 p-3 rounded-lg text-sm">
-          <strong className="text-primary dark:text-primary-light">Example:</strong> {example}
+      
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className={`${imageSrc ? 'md:w-1/2' : 'w-full'}`}>
+          <p className="text-surface-700 dark:text-surface-300 mb-4">{description}</p>
+          {example && (
+            <div className="bg-surface-100 dark:bg-surface-800 p-3 rounded-lg text-sm">
+              <strong className="text-primary dark:text-primary-light">Example:</strong> {example}
+            </div>
+          )}
         </div>
-      )}
+        
+        {imageSrc && (
+          <div className="md:w-1/2">
+            <ImageWithCaption 
+              src={imageSrc} 
+              alt={imageAlt || title}
+              caption={imageCaption || `Visual example of the ${title} technique`}
+            />
+          </div>
+        )}
+      </div>
     </div>
   )
 
@@ -100,39 +129,49 @@ const SudokuGuide = () => {
         icon={<Book size={24} className="text-primary" />}
       >
         <div className="space-y-4">
-          <p>
-            Sudoku is a logic-based number placement puzzle that has captivated puzzle enthusiasts worldwide. 
-            The name "Sudoku" is an abbreviation of a Japanese phrase "Sūji wa dokushin ni kagiru," 
-            which translates to "the numbers must remain single."
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-semibold mb-2">Origins</h4>
-              <p className="text-surface-700 dark:text-surface-300">
-                Contrary to popular belief, Sudoku wasn't invented in Japan. The modern Sudoku puzzle was 
-                actually designed by Howard Garns, an American architect, in 1979. It was originally 
-                called "Number Place" and was published in Dell Magazines.
+          <div className="flex flex-col md:flex-row gap-6">
+            <div className="md:w-1/2">
+              <p>
+                Sudoku is a logic-based number placement puzzle that has captivated puzzle enthusiasts worldwide. 
+                The name "Sudoku" is an abbreviation of a Japanese phrase "Sūji wa dokushin ni kagiru," 
+                which translates to "the numbers must remain single."
               </p>
+              
+              <div className="mt-4">
+                <h4 className="font-semibold mb-2">Origins</h4>
+                <p className="text-surface-700 dark:text-surface-300">
+                  Contrary to popular belief, Sudoku wasn't invented in Japan. The modern Sudoku puzzle was 
+                  actually designed by Howard Garns, an American architect, in 1979. It was originally 
+                  called "Number Place" and was published in Dell Magazines.
+                </p>
+              </div>
+              
+              <div className="mt-4">
+                <h4 className="font-semibold mb-2">Global Popularity</h4>
+                <p className="text-surface-700 dark:text-surface-300">
+                  Sudoku gained international popularity in 2004 when it was introduced by The Times newspaper 
+                  in London. Since then, it has become a staple in newspapers, puzzle books, and digital 
+                  applications worldwide.
+                </p>
+              </div>
             </div>
             
-            <div>
-              <h4 className="font-semibold mb-2">Global Popularity</h4>
-              <p className="text-surface-700 dark:text-surface-300">
-                Sudoku gained international popularity in 2004 when it was introduced by The Times newspaper 
-                in London. Since then, it has become a staple in newspapers, puzzle books, and digital 
-                applications worldwide.
-              </p>
+            <div className="md:w-1/2">
+              <ImageWithCaption 
+                src={SUDOKU_HISTORY} 
+                alt="History of Sudoku puzzle"
+                caption="Evolution of Sudoku from its origins to modern digital versions"
+              />
+              
+              <div className="bg-surface-100 dark:bg-surface-800 p-4 rounded-lg mt-4">
+                <h4 className="font-semibold mb-2">Did You Know?</h4>
+                <p className="text-surface-700 dark:text-surface-300">
+                  Sudoku puzzles follow mathematical principles related to "Latin squares," which were studied 
+                  by Swiss mathematician Leonhard Euler in the 18th century. However, Sudoku adds the constraint 
+                  of non-repeating numbers within defined regions or boxes.
+                </p>
+              </div>
             </div>
-          </div>
-          
-          <div className="bg-surface-100 dark:bg-surface-800 p-4 rounded-lg">
-            <h4 className="font-semibold mb-2">Did You Know?</h4>
-            <p className="text-surface-700 dark:text-surface-300">
-              Sudoku puzzles follow mathematical principles related to "Latin squares," which were studied 
-              by Swiss mathematician Leonhard Euler in the 18th century. However, Sudoku adds the constraint 
-              of non-repeating numbers within defined regions or boxes.
-            </p>
           </div>
         </div>
       </Section>
@@ -143,54 +182,66 @@ const SudokuGuide = () => {
         icon={<AlertTriangle size={24} className="text-secondary" />}
       >
         <div className="space-y-4">
-          <h4 className="font-semibold">Basic Rules of Sudoku</h4>
-          <div className="space-y-2">
-            <p>Sudoku is played on a grid, typically 9×9, divided into smaller regions (usually 3×3 boxes).</p>
-            
-            <div className="pl-5 space-y-2">
-              <div className="flex items-start gap-2">
-                <div className="min-w-6 h-6 flex items-center justify-center rounded-full bg-primary text-white text-sm font-bold">1</div>
-                <p>The objective is to fill the grid so that each row, column, and region contains all the numbers from 1 to 9 (for a 9×9 grid) with no repetition.</p>
+          <div className="flex flex-col md:flex-row gap-6">
+            <div className="md:w-1/2">
+              <h4 className="font-semibold">Basic Rules of Sudoku</h4>
+              <div className="space-y-2 mt-3">
+                <p>Sudoku is played on a grid, typically 9×9, divided into smaller regions (usually 3×3 boxes).</p>
+                
+                <div className="pl-5 space-y-2">
+                  <div className="flex items-start gap-2">
+                    <div className="min-w-6 h-6 flex items-center justify-center rounded-full bg-primary text-white text-sm font-bold">1</div>
+                    <p>The objective is to fill the grid so that each row, column, and region contains all the numbers from 1 to 9 (for a 9×9 grid) with no repetition.</p>
+                  </div>
+                  
+                  <div className="flex items-start gap-2">
+                    <div className="min-w-6 h-6 flex items-center justify-center rounded-full bg-primary text-white text-sm font-bold">2</div>
+                    <p>The puzzle begins with some cells already filled with numbers (called "givens" or "clues").</p>
+                  </div>
+                  
+                  <div className="flex items-start gap-2">
+                    <div className="min-w-6 h-6 flex items-center justify-center rounded-full bg-primary text-white text-sm font-bold">3</div>
+                    <p>Each puzzle has only one valid solution.</p>
+                  </div>
+                </div>
               </div>
               
-              <div className="flex items-start gap-2">
-                <div className="min-w-6 h-6 flex items-center justify-center rounded-full bg-primary text-white text-sm font-bold">2</div>
-                <p>The puzzle begins with some cells already filled with numbers (called "givens" or "clues").</p>
-              </div>
-              
-              <div className="flex items-start gap-2">
-                <div className="min-w-6 h-6 flex items-center justify-center rounded-full bg-primary text-white text-sm font-bold">3</div>
-                <p>Each puzzle has only one valid solution.</p>
+              <div className="bg-primary/10 dark:bg-primary/20 p-4 rounded-lg mt-4">
+                <h4 className="font-semibold mb-2">The Three Constraints</h4>
+                <ul className="list-disc pl-5 space-y-2">
+                  <li><strong>Row Constraint:</strong> Each row must contain each number exactly once</li>
+                  <li><strong>Column Constraint:</strong> Each column must contain each number exactly once</li>
+                  <li><strong>Region Constraint:</strong> Each region/box must contain each number exactly once</li>
+                </ul>
               </div>
             </div>
-          </div>
-          
-          <div className="bg-primary/10 dark:bg-primary/20 p-4 rounded-lg">
-            <h4 className="font-semibold mb-2">The Three Constraints</h4>
-            <ul className="list-disc pl-5 space-y-2">
-              <li><strong>Row Constraint:</strong> Each row must contain each number exactly once</li>
-              <li><strong>Column Constraint:</strong> Each column must contain each number exactly once</li>
-              <li><strong>Region Constraint:</strong> Each region/box must contain each number exactly once</li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="font-semibold mb-2">Variations in Grid Size</h4>
-            <p className="mb-3">
-              While the classic Sudoku is 9×9, the puzzle can be adapted to different sizes, each with its own challenges:
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="bg-surface-100 dark:bg-surface-800 p-3 rounded-lg text-center">
-                <strong className="text-lg block mb-1">4×4</strong>
-                <p className="text-sm">Uses numbers 1-4, ideal for beginners</p>
-              </div>
-              <div className="bg-surface-100 dark:bg-surface-800 p-3 rounded-lg text-center">
-                <strong className="text-lg block mb-1">6×6</strong>
-                <p className="text-sm">Uses numbers 1-6, intermediate challenge</p>
-              </div>
-              <div className="bg-surface-100 dark:bg-surface-800 p-3 rounded-lg text-center">
-                <strong className="text-lg block mb-1">9×9</strong>
-                <p className="text-sm">The classic version, greatest complexity</p>
+            
+            <div className="md:w-1/2">
+              <ImageWithCaption 
+                src={SUDOKU_RULES} 
+                alt="Sudoku Rules Visualization"
+                caption="Visual illustration of Sudoku rules showing row, column, and box constraints"
+              />
+              
+              <div className="mt-4">
+                <h4 className="font-semibold mb-2">Variations in Grid Size</h4>
+                <p className="mb-3">
+                  While the classic Sudoku is 9×9, the puzzle can be adapted to different sizes, each with its own challenges:
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="bg-surface-100 dark:bg-surface-800 p-3 rounded-lg text-center">
+                    <strong className="text-lg block mb-1">4×4</strong>
+                    <p className="text-sm">Uses numbers 1-4, ideal for beginners</p>
+                  </div>
+                  <div className="bg-surface-100 dark:bg-surface-800 p-3 rounded-lg text-center">
+                    <strong className="text-lg block mb-1">6×6</strong>
+                    <p className="text-sm">Uses numbers 1-6, intermediate challenge</p>
+                  </div>
+                  <div className="bg-surface-100 dark:bg-surface-800 p-3 rounded-lg text-center">
+                    <strong className="text-lg block mb-1">9×9</strong>
+                    <p className="text-sm">The classic version, greatest complexity</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -213,6 +264,8 @@ const SudokuGuide = () => {
             difficulty="Easy"
             description="Scanning involves checking rows, columns, and boxes systematically to identify where a number can be placed. Look across rows and down columns to find possible positions for each number."
             example="If you need to place a 5 in a row, check which cells in that row don't already have a 5 in their column or box."
+            imageSrc={TECHNIQUE_SCANNING}
+            imageCaption="Scanning technique: systematically checking rows and columns"
           />
           
           <Technique 
@@ -220,6 +273,8 @@ const SudokuGuide = () => {
             difficulty="Easy"
             description="When there is only one possible position for a number within a row, column, or box, you can confidently place that number there."
             example="If seven of the nine positions in a box are filled or eliminated for placing a 3, then the 3 must go into one of the two remaining cells. If one of those cells can be eliminated (because a 3 already exists in its row or column), then the 3 must go in the last remaining cell."
+            imageSrc={TECHNIQUE_SINGLE_POSITION}
+            imageCaption="Single Position: identifying where a number must be placed"
           />
           
           <Technique 
@@ -258,6 +313,8 @@ const SudokuGuide = () => {
             difficulty="Medium"
             description="Write small candidate numbers in each empty cell to represent all possible values for that cell. As you solve more cells, you can eliminate candidates based on the rules."
             example="If a cell could contain 2, 5, or 8, write these numbers small in the cell. Later, if you place a 5 in the same row, you can eliminate 5 as a candidate."
+            imageSrc={TECHNIQUE_PENCIL_MARKS}
+            imageCaption="Pencil marks technique: keeping track of possible values in each cell"
           />
           
           <Technique 
@@ -298,6 +355,8 @@ const SudokuGuide = () => {
             difficulty="Hard"
             description="When a candidate appears exactly twice in each of two different rows, and the candidates are aligned in the same columns, then candidates in those columns outside these rows can be eliminated."
             example="If rows 2 and 5 both have the number 7 as candidates only in columns 1 and 6, then 7 can be eliminated as a candidate from all other cells in columns 1 and 6."
+            imageSrc={TECHNIQUE_XWING}
+            imageCaption="X-Wing pattern: eliminating candidates through rectangle formations"
           />
           
           <Technique 
@@ -305,6 +364,8 @@ const SudokuGuide = () => {
             difficulty="Hard"
             description="Involves three cells: a pivot cell with exactly two candidates, and two other cells that each share one candidate with the pivot and have a common second candidate."
             example="If cell A can be 2 or 3, cell B can be 2 or 8, and cell C can be 3 or 8, then cell A is the pivot. The common candidate 8 can be eliminated from any cell that sees both cells B and C."
+            imageSrc={TECHNIQUE_YWING}
+            imageCaption="Y-Wing pattern: using a pivot cell to eliminate candidates"
           />
           
           <Technique 
@@ -335,7 +396,13 @@ const SudokuGuide = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="card">
               <h4 className="font-semibold text-lg mb-3">4×4 Sudoku</h4>
-              <ul className="space-y-2">
+              <ImageWithCaption 
+                src={SUDOKU_4X4} 
+                alt="4x4 Sudoku Grid Example"
+                caption="A simple 4×4 Sudoku grid, perfect for beginners"
+                width="w-3/4 mx-auto"
+              />
+              <ul className="space-y-2 mt-4">
                 <li className="flex items-start gap-2">
                   <CheckSquare size={18} className="text-green-500 mt-0.5" />
                   <span>Focus on scanning techniques</span>
@@ -357,7 +424,13 @@ const SudokuGuide = () => {
             
             <div className="card">
               <h4 className="font-semibold text-lg mb-3">6×6 Sudoku</h4>
-              <ul className="space-y-2">
+              <ImageWithCaption 
+                src={SUDOKU_6X6} 
+                alt="6x6 Sudoku Grid Example"
+                caption="A 6×6 Sudoku grid, good for intermediate practice"
+                width="w-3/4 mx-auto"
+              />
+              <ul className="space-y-2 mt-4">
                 <li className="flex items-start gap-2">
                   <CheckSquare size={18} className="text-yellow-500 mt-0.5" />
                   <span>Apply candidate listing techniques</span>
@@ -379,7 +452,13 @@ const SudokuGuide = () => {
             
             <div className="card">
               <h4 className="font-semibold text-lg mb-3">9×9 Sudoku</h4>
-              <ul className="space-y-2">
+              <ImageWithCaption 
+                src={SUDOKU_9X9} 
+                alt="9x9 Sudoku Grid Example"
+                caption="A standard 9×9 Sudoku grid, the classic challenge"
+                width="w-3/4 mx-auto"
+              />
+              <ul className="space-y-2 mt-4">
                 <li className="flex items-start gap-2">
                   <CheckSquare size={18} className="text-red-500 mt-0.5" />
                   <span>Use all solving techniques as needed</span>
